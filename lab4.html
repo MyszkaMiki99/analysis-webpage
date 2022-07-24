@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ 
+th,td {
+    border: 2px solid black;
+    padding: 10px;
+}
+ 
+#data {
+    margin-bottom: 10px;
+}
+ 
+#data input, button {
+    padding: 10px;
+    width: 90px;
+}
+</style>
+</head>
+<body>
+ 
+    <div class="container">
+        <div id="data">
+            <input type="numer" id="x" placeholder="Enter x">
+            <input type="number" id="y" placeholder="Enter y">
+            <input type="numer" id="z" placeholder="Enter z">
+            <input type="number" id="v" placeholder="Enter v">
+            <button>Add</button>
+        </div>
+ 
+        <table id="tabelka" >
+            <tr>
+                <th >x</th>
+                <th >y</th>
+                <th >z</th>
+                <th >v</th>
+            </tr>
+ 
+            <tr>
+                <td class = "x">3</td>
+                <td class = "y">3</td>
+                <td class = "z">3</td>
+                <td class = "v">4</td>
+            </tr>
+ 
+            <tr>
+                <td class = "x">1</td>
+                <td class = "y">40</td>
+                <td class = "z">2</td>
+                <td class = "v">10</td>
+            </tr>
+ 
+            <tr>
+                <td class = "x">12</td>
+                <td class = "y">30</td>
+                <td class = "z">12</td>
+                <td class = "v">12</td>
+            </tr>
+        </table>
+ 
+    </div>
+ 
+ 
+    <script>let btnAdd = document.querySelector('button');
+let table = document.querySelector('table');
+ 
+ 
+let xInput = document.querySelector('#x');
+let yInput = document.querySelector('#y');
+let zInput = document.querySelector('#z');
+let vInput = document.querySelector('#v');
+ 
+btnAdd.addEventListener('click', () => {
+    let x = xInput.value;
+    let y = yInput.value;
+    let z = zInput.value;
+    let v = vInput.value;
+ 
+    let template = `
+                <tr>
+                    <td class = "x">${x}</td>
+                    <td class = "y">${y}</td>
+                    <td class = "z">${z}</td>
+                    <td class = "v">${v}</td>
+                </tr>`;
+ 
+    table.innerHTML += template;
+});
+	</script>
+    
+    <button type="button" id="btn1" onclick="bom1()" class="btn">
+    mean of x
+	</button>
+    <span id="val"></span>
+        
+        <script>
+            function bom1 () {
+            var table = document.getElementById("tabelka"), sumVal = 0;
+            
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                sumVal = sumVal + parseInt(table.rows[i].cells[0].innerHTML);
+            }
+            
+            document.getElementById("val").innerHTML = "Sum Value = " + sumVal;
+            console.log(sumVal);
+			var sr = sumVal/(table.rows.length - 1)
+			document.getElementById("V").innerHTML=sr;
+            }
+        </script>
+    
+  <p><b>mean of x = </b><span id="V">?</span></p>  
+  
+  <button type="button" id="btn2" onclick="bom2()" class="btn">
+    Standard deviation y
+	</button>
+    <span id="val1"></span>
+        
+        <script>
+            function bom2 () {
+            var table = document.getElementById("tabelka"), sumVal = 0;
+            
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                sumVal = sumVal + parseFloat(table.rows[i].cells[1].innerHTML);
+            }
+            
+            document.getElementById("val1").innerHTML = "Sum Value = " + sumVal;
+            console.log(sumVal);
+			var sr = sumVal/(table.rows.length - 1)
+			var odch_stand = 0;
+			for ( var i = 1; i < table.rows.length; i++){
+			odch_stand = (odch_stand + parseFloat(table.rows[i].cells[1].innerHTML))^2;
+			}
+			var odch_stand_fin = Math.sqrt(odch_stand/(table.rows.length - 1));
+			document.getElementById("V1").innerHTML=odch_stand_fin;
+			
+            }
+        </script>
+    
+  <p><b>Standard deviation of y = </b><span id="V1">?</span></p> 
+
+    <button type="button" id="btn3" onclick="bom3()" class="btn">
+    Pearson correlation coefficient "z" and "v"
+	</button>
+    <span id="val2"></span>
+        
+        <script>
+            function bom3 () {
+            var table = document.getElementById("tabelka");
+			sumVal1 = 0;
+            sumVal2 = 0;
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                sumVal1 = sumVal1 + parseInt(table.rows[i].cells[2].innerHTML);
+				sumVal2 = sumVal2 + parseInt(table.rows[i].cells[3].innerHTML);
+            }
+            
+            document.getElementById("val2").innerHTML = "Sum Value = " + sumVal1;
+            console.log(sumVal1);
+			var sr1 = sumVal1/(table.rows.length - 1)
+			
+			document.getElementById("val2").innerHTML = "Sum Value = " + sumVal2;
+            console.log(sumVal2);
+			var sr2 = sumVal2/(table.rows.length - 1)
+			
+
+			var s = 0;
+			var s1 = 0;
+			var s2 = 0;
+			for ( var i = 1; i < table.rows.length; i++){
+			s = s + (parseFloat(table.rows[i].cells[2].innerHTML) - sr1) * (parseFloat(table.rows[i].cells[3].innerHTML) - sr2)
+			s1= s1 + (parseFloat(table.rows[i].cells[2].innerHTML) - sr1)^2;
+			s2= s2 + (parseFloat(table.rows[i].cells[3].innerHTML) - sr2)^2;
+			}
+			var pearson= s /(Math.sqrt(s1)*Math.sqrt(s2))
+			
+			document.getElementById("V2").innerHTML=pearson;
+            }
+        </script>
+    
+  <p><b>pearson  = </b><span id="V2">?</span></p>    
+  
+  
+  
+</body>
+</html>
